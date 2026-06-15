@@ -1,9 +1,15 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 
 // Load env
-dotenv.config({ path: path.join(__dirname, '../../../.env') });
+const envPath = path.join(__dirname, '../../../.env');
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+} else {
+  console.log('.env file not found, relying on system environment variables');
+}
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
