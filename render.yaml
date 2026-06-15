@@ -39,3 +39,19 @@ services:
         sync: false
       - key: CLOUDINARY_API_SECRET
         sync: false
+
+  - type: web
+    name: hr-system-frontend
+    env: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: BACKEND_URL
+        value: https://hr-porter-2.onrender.com
+      - key: NEXT_PUBLIC_BACKEND_URL
+        value: https://hr-porter-2.onrender.com
+
