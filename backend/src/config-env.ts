@@ -6,6 +6,7 @@ import fs from 'fs';
 // Register module aliases for production compiled code (ends with .js in dist/)
 if (__filename.endsWith('.js')) {
   moduleAlias.addAliases({
+    '@/app/api/models': path.join(__dirname, 'models'),
     '@/backend': __dirname,
     '@/app': __dirname,
     'next/server': path.join(__dirname, 'next-mock.js')
