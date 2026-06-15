@@ -218,7 +218,7 @@ export default function LoginPage({ onLogin, onSwitchToSignup, onSwitchToForgot,
 
   return (
     <div 
-      className="min-h-screen bg-slate-950 flex items-center justify-center p-6 relative overflow-hidden auth-page" 
+      className="min-h-screen bg-slate-950 flex items-center justify-center p-6 relative overflow-y-auto auth-page" 
       style={branding?.loginBackground ? { backgroundImage: `url(${branding.loginBackground})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
       suppressHydrationWarning
     >

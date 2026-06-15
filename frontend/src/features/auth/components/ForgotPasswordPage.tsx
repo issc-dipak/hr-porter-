@@ -103,7 +103,7 @@ export default function ForgotPasswordPage({ onSwitchToLogin }: ForgotPasswordPa
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 relative overflow-hidden auth-page">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 relative overflow-y-auto auth-page">
       {/* Moving Aura Background */}
       <div className="absolute inset-0">
         <motion.div 
@@ -170,7 +170,7 @@ export default function ForgotPasswordPage({ onSwitchToLogin }: ForgotPasswordPa
         </div>
 
         {/* Right Form Panel */}
-        <div className="flex-1 p-8 lg:p-10 bg-slate-900 flex flex-col justify-center">
+        <div className="flex-1 p-4 sm:p-6 lg:p-10 bg-slate-900 flex flex-col justify-center">
           <div className="max-w-xs mx-auto w-full">
             <motion.button 
               whileHover={{ x: -4 }}

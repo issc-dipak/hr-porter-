@@ -229,7 +229,7 @@ export default function SignupPage({
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 md:p-6 relative overflow-hidden auth-page">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 md:p-6 relative overflow-y-auto auth-page">
       {/* Moving Aura Background */}
       <div className="absolute inset-0">
         <div className="absolute top-[10%] right-[10%] w-[50%] h-[50%] blur-[150px] rounded-full bg-cyan-500/10 opacity-30" />
@@ -243,7 +243,7 @@ export default function SignupPage({
         className="relative z-10 w-full max-w-[850px] bg-slate-900/90 backdrop-blur-3xl border border-slate-800 rounded-3xl shadow-2xl flex flex-col lg:flex-row overflow-hidden"
       >
         {/* Left Info Banner */}
-        <div className="flex-1 p-6 lg:p-8 bg-slate-950/80 relative overflow-hidden flex flex-col justify-between border-r border-slate-800/80">
+        <div className="hidden lg:flex flex-1 p-6 lg:p-8 bg-slate-950/80 relative overflow-hidden flex-col justify-between border-r border-slate-800/80">
           <div className="relative z-10 space-y-6">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center border border-blue-500/20">
@@ -295,7 +295,7 @@ export default function SignupPage({
         </div>
 
         {/* Right Form Console */}
-        <div className="flex-[1.4] p-6 lg:p-8 flex flex-col justify-center relative">
+        <div className="flex-[1.4] p-4 sm:p-6 lg:p-8 flex flex-col justify-center relative">
           
           {/* Header & Switching */}
           <div className="flex justify-between items-center mb-6">
@@ -328,14 +328,14 @@ export default function SignupPage({
 
           {/* STEP 1: Company Profile */}
           {step === 1 && (
-            <form onSubmit={handleNextStep} className="space-y-4 text-left">
+            <form onSubmit={handleNextStep} className="space-y-3 md:space-y-4 text-left">
               <div>
                 <h3 className="text-base font-bold text-white tracking-tight leading-none">Register Company Profile</h3>
                 <p className="text-[9px] text-slate-500 font-bold uppercase mt-1">Configure company metadata and subdomain mapping</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-2.5 md:gap-4">
+                <div className="space-y-1 col-span-2 md:col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Company Name</label>
                   <div className="relative">
                     <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -345,12 +345,12 @@ export default function SignupPage({
                       placeholder="e.g. Acme Corp"
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-2 md:col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Subdomain Slug</label>
                   <div className="relative">
                     <input 
@@ -359,13 +359,13 @@ export default function SignupPage({
                       placeholder="e.g. acme"
                       value={slug}
                       onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
-                      className="w-full pl-3 pr-16 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
+                      className="w-full pl-3 pr-16 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
                     />
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[8px] font-black text-slate-500 uppercase">.hrcore.com</span>
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-2 md:col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Work Email Address</label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -375,85 +375,85 @@ export default function SignupPage({
                       placeholder="e.g. admin@acme.com"
                       value={workEmail}
                       onChange={(e) => setWorkEmail(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Company Size</label>
                   <div className="relative">
                     <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                     <select 
                       value={companySize}
                       onChange={(e) => setCompanySize(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none cursor-pointer appearance-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none cursor-pointer appearance-none focus:border-blue-500/50"
                     >
-                      <option value="1-10">1 - 10 Employees</option>
-                      <option value="11-50">11 - 50 Employees</option>
-                      <option value="51-200">51 - 200 Employees</option>
-                      <option value="201-500">201 - 500 Employees</option>
+                      <option value="1-10">1-10 Employees</option>
+                      <option value="11-50">11-50 Employees</option>
+                      <option value="51-200">51-200 Employees</option>
+                      <option value="201-500">201-500 Employees</option>
                       <option value="500+">500+ Employees</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Industry</label>
                   <div className="relative">
                     <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                     <select 
                       value={industry}
                       onChange={(e) => setIndustry(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none cursor-pointer appearance-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none cursor-pointer appearance-none focus:border-blue-500/50"
                     >
-                      <option value="Technology">Technology & IT</option>
-                      <option value="Finance">Finance & Banking</option>
-                      <option value="Healthcare">Healthcare & Pharma</option>
-                      <option value="Retail">Retail & E-commerce</option>
+                      <option value="Technology">Tech / IT</option>
+                      <option value="Finance">Finance</option>
+                      <option value="Healthcare">Healthcare</option>
+                      <option value="Retail">Retail</option>
                       <option value="Education">Education</option>
-                      <option value="Professional Services">Professional Services</option>
+                      <option value="Professional Services">Services</option>
                       <option value="Other">Other</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Country</label>
                   <div className="relative">
                     <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                     <select 
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none cursor-pointer appearance-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none cursor-pointer appearance-none focus:border-blue-500/50"
                     >
                       <option value="India">India</option>
-                      <option value="United States">United States</option>
-                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="United States">USA</option>
+                      <option value="United Kingdom">UK</option>
                       <option value="Canada">Canada</option>
-                      <option value="Australia">Australia</option>
+                      <option value="Australia">Aus</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Timezone</label>
                   <div className="relative">
                     <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                     <select 
                       value={timezone}
                       onChange={(e) => setTimezone(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none cursor-pointer appearance-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none cursor-pointer appearance-none focus:border-blue-500/50"
                     >
-                      <option value="IST (UTC+05:30)">IST (UTC+05:30)</option>
-                      <option value="EST (UTC-05:00)">EST (UTC-05:00)</option>
-                      <option value="GMT (UTC+00:00)">GMT (UTC+00:00)</option>
-                      <option value="PST (UTC-08:00)">PST (UTC-08:00)</option>
+                      <option value="IST (UTC+05:30)">IST (+5:30)</option>
+                      <option value="EST (UTC-05:00)">EST (-5:00)</option>
+                      <option value="GMT (UTC+00:00)">GMT (+0:00)</option>
+                      <option value="PST (UTC-08:00)">PST (-8:00)</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-2 md:col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Contact Phone Number</label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -462,7 +462,7 @@ export default function SignupPage({
                       placeholder="+91 99999 99999"
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
                     />
                   </div>
                 </div>
@@ -470,7 +470,7 @@ export default function SignupPage({
 
               <button 
                 type="submit"
-                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold uppercase tracking-widest text-[9px] shadow-lg flex items-center justify-center gap-1 cursor-pointer transition-all active:scale-[0.99] mt-6"
+                className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold uppercase tracking-widest text-[9px] shadow-lg flex items-center justify-center gap-1 cursor-pointer transition-all active:scale-[0.99] mt-4"
               >
                 Proceed to Admin Account <ArrowRight className="w-3.5 h-3.5" />
               </button>
@@ -479,14 +479,14 @@ export default function SignupPage({
 
           {/* STEP 2: Admin Account Credentials */}
           {step === 2 && (
-            <form onSubmit={handleCompanyRegister} className="space-y-4 text-left">
+            <form onSubmit={handleCompanyRegister} className="space-y-3 md:space-y-4 text-left">
               <div>
                 <h3 className="text-base font-bold text-white tracking-tight leading-none">Configure Admin Profile</h3>
                 <p className="text-[9px] text-slate-500 font-bold uppercase mt-1">Set up primary credentials for the Company Admin</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-2.5 md:gap-4">
+                <div className="space-y-1 col-span-2 md:col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Admin Full Name</label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -496,12 +496,12 @@ export default function SignupPage({
                       placeholder="e.g. John Doe"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-2 md:col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Admin Designation</label>
                   <div className="relative">
                     <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -511,12 +511,12 @@ export default function SignupPage({
                       placeholder="e.g. CEO / Director"
                       value={designation}
                       onChange={(e) => setDesignation(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-2 md:col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Set Password</label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -526,7 +526,7 @@ export default function SignupPage({
                       placeholder="Enter strong password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-9 pr-10 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-10 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
                     />
                     <button 
                       type="button"
@@ -550,7 +550,7 @@ export default function SignupPage({
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1 col-span-2 md:col-span-1">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Confirm Password</label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -560,15 +560,15 @@ export default function SignupPage({
                       placeholder="Re-enter password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
+                      className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
                     />
                   </div>
                 </div>
 
                 {/* Math CAPTCHA */}
-                <div className="space-y-1 md:col-span-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-2xl">
+                <div className="space-y-1 col-span-2 bg-slate-950/40 border border-slate-800/60 p-2.5 rounded-2xl">
                   <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Anti-Bot Security Challenge</label>
-                  <div className="flex items-center gap-3 mt-1.5">
+                  <div className="flex items-center gap-3 mt-1">
                     <div className="px-4 py-2 bg-slate-950 border border-slate-800 text-slate-300 font-mono text-xs rounded-xl font-black select-none tracking-wider shrink-0">
                       {captcha.num1} + {captcha.num2} = ?
                     </div>
@@ -578,7 +578,7 @@ export default function SignupPage({
                       placeholder="Answer"
                       value={captchaInput}
                       onChange={(e) => setCaptchaInput(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
+                      className="w-full px-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-blue-500/50"
                     />
                     <button 
                       type="button" 
@@ -591,18 +591,18 @@ export default function SignupPage({
                 </div>
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex gap-4 pt-2">
                 <button 
                   type="button"
                   onClick={() => setStep(1)}
-                  className="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold uppercase tracking-widest text-[9px] flex items-center justify-center gap-1 cursor-pointer transition-all active:scale-[0.99]"
+                  className="flex-1 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold uppercase tracking-widest text-[9px] flex items-center justify-center gap-1 cursor-pointer transition-all active:scale-[0.99]"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" /> Back
                 </button>
                 <button 
                   type="submit"
                   disabled={loading}
-                  className="flex-[2] py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold uppercase tracking-widest text-[9px] shadow-lg flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 transition-all active:scale-[0.99]"
+                  className="flex-[2] py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold uppercase tracking-widest text-[9px] shadow-lg flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 transition-all active:scale-[0.99]"
                 >
                   {loading ? (
                     <RefreshCcw className="w-3.5 h-3.5 animate-spin" />

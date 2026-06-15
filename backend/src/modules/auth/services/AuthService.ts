@@ -207,7 +207,7 @@ export class AuthService {
       </div>
     `;
 
-    await sendEmail({ to: cleanEmail, subject, text, html }).catch(err => {
+    sendEmail({ to: cleanEmail, subject, text, html }).catch(err => {
       console.error('Failed to send registration OTP email:', err);
     });
 
@@ -361,7 +361,9 @@ export class AuthService {
       </div>
     `;
 
-    await sendEmail({ to: user.email, subject, text, html });
+    sendEmail({ to: user.email, subject, text, html }).catch(err => {
+      console.error('Failed to send OTP email:', err);
+    });
 
     return { message: 'OTP sent successfully to email.', status: 200 };
   }
@@ -429,7 +431,7 @@ export class AuthService {
       </div>
     `;
 
-    await sendEmail({ to: cleanEmail, subject, text, html }).catch(err => {
+    sendEmail({ to: cleanEmail, subject, text, html }).catch(err => {
       console.error('Failed to send invitation email:', err);
     });
 

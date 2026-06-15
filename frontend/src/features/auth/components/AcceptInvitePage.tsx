@@ -114,7 +114,7 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 md:p-6 relative overflow-hidden auth-page">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 md:p-6 relative overflow-y-auto auth-page">
       {/* Aura background */}
       <div className="absolute inset-0">
         <div className="absolute top-[10%] left-[10%] w-[50%] h-[50%] blur-[150px] rounded-full bg-indigo-500/10 opacity-30" />
@@ -128,7 +128,7 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
         className="relative z-10 w-full max-w-[850px] bg-slate-900/90 backdrop-blur-3xl border border-slate-800 rounded-3xl shadow-2xl flex flex-col lg:flex-row overflow-hidden"
       >
         {/* Left info panel */}
-        <div className="flex-1 p-6 lg:p-8 bg-slate-950/80 relative overflow-hidden flex flex-col justify-between border-r border-slate-800/80">
+        <div className="hidden lg:flex flex-1 p-6 lg:p-8 bg-slate-950/80 relative overflow-hidden flex-col justify-between border-r border-slate-800/80">
           <div className="relative z-10 space-y-6">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center border border-indigo-500/20">
@@ -179,7 +179,7 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
         </div>
 
         {/* Right Form Console */}
-        <div className="flex-[1.4] p-6 lg:p-8 flex flex-col justify-center relative">
+        <div className="flex-[1.4] p-4 sm:p-6 lg:p-8 flex flex-col justify-center relative">
           
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-base font-bold text-white tracking-tight leading-none">Accept Workspace Invite</h3>
@@ -192,7 +192,7 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-left">
+          <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4 text-left">
             <div className="space-y-1">
               <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Mobile Number</label>
               <div className="relative">
@@ -202,13 +202,13 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
                   placeholder="e.g. +91 99999 99999"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-indigo-500/50"
+                  className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-indigo-500/50"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-1">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-2.5 md:gap-4">
+              <div className="space-y-1 col-span-2 md:col-span-1">
                 <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Set Password</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -218,7 +218,7 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-9 pr-10 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-indigo-500/50"
+                    className="w-full pl-9 pr-10 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-indigo-500/50"
                   />
                   <button 
                     type="button"
@@ -242,7 +242,7 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
                 </div>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1 col-span-2 md:col-span-1">
                 <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Confirm Password</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -252,15 +252,15 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
                     placeholder="Re-enter password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-indigo-500/50"
+                    className="w-full pl-9 pr-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-indigo-500/50"
                   />
                 </div>
               </div>
 
               {/* Math CAPTCHA */}
-              <div className="space-y-1 md:col-span-2 bg-slate-950/40 border border-slate-800/60 p-3 rounded-2xl">
+              <div className="space-y-1 col-span-2 bg-slate-950/40 border border-slate-800/60 p-2.5 rounded-2xl">
                 <label className="text-[8px] font-black uppercase tracking-widest text-slate-400 block ml-0.5">Anti-Bot Security Challenge</label>
-                <div className="flex items-center gap-3 mt-1.5">
+                <div className="flex items-center gap-3 mt-1">
                   <div className="px-4 py-2 bg-slate-950 border border-slate-800 text-slate-300 font-mono text-xs rounded-xl font-black select-none tracking-wider shrink-0">
                     {captcha.num1} + {captcha.num2} = ?
                   </div>
@@ -270,7 +270,7 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
                     placeholder="Answer"
                     value={captchaInput}
                     onChange={(e) => setCaptchaInput(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-indigo-500/50"
+                    className="w-full px-3 py-1.5 md:py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white font-bold outline-none focus:border-indigo-500/50"
                   />
                   <button 
                     type="button" 
@@ -283,18 +283,18 @@ export default function AcceptInvitePage({ token, onSuccess, onBackToLogin }: Ac
               </div>
             </div>
 
-            <div className="flex gap-4 pt-4">
+            <div className="flex gap-4 pt-2">
               <button 
                 type="button"
                 onClick={onBackToLogin}
-                className="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold uppercase tracking-widest text-[9px] flex items-center justify-center gap-1 cursor-pointer transition-all active:scale-[0.99]"
+                className="flex-1 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold uppercase tracking-widest text-[9px] flex items-center justify-center gap-1 cursor-pointer transition-all active:scale-[0.99]"
               >
                 Back to Login
               </button>
               <button 
                 type="submit"
                 disabled={loading}
-                className="flex-[2] py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold uppercase tracking-widest text-[9px] shadow-lg flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 transition-all active:scale-[0.99]"
+                className="flex-[2] py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold uppercase tracking-widest text-[9px] shadow-lg flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 transition-all active:scale-[0.99]"
               >
                 {loading ? (
                   <RefreshCcw className="w-3.5 h-3.5 animate-spin" />

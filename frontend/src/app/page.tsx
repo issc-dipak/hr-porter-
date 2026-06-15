@@ -184,7 +184,7 @@ const SidebarItem = ({
 
       {mounted && createPortal(
         <AnimatePresence>
-          {!sidebarOpen && isHovered && coords && (
+          {!isMobile && !sidebarOpen && isHovered && coords && (
             <div 
               className="fixed left-[96px] z-[90] pointer-events-none"
               style={{ 
@@ -854,7 +854,7 @@ export default function HRManagementSystem() {
             >
               <Menu className="w-4.5 h-4.5" />
               <AnimatePresence>
-                {isMenuHovered && (
+                {!isMobile && isMenuHovered && (
                   <motion.div
                     initial={{ opacity: 0, x: -15, scale: 0.95 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -1009,7 +1009,7 @@ export default function HRManagementSystem() {
             <LogOut className="w-4 h-4 shrink-0 transition-transform duration-300 group-hover/logout:translate-x-1" />
             {sidebarOpen && <span className="font-black text-[8.5px] uppercase tracking-widest">Logout</span>}
             <AnimatePresence>
-              {!sidebarOpen && isLogoutHovered && (
+              {!isMobile && !sidebarOpen && isLogoutHovered && (
                 <motion.div
                   initial={{ opacity: 0, x: -15, scale: 0.95 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
