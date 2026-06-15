@@ -1,6 +1,16 @@
+import * as moduleAlias from 'module-alias';
 import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
+
+// Register module aliases for production compiled code (ends with .js in dist/)
+if (__filename.endsWith('.js')) {
+  moduleAlias.addAliases({
+    '@/backend': __dirname,
+    '@/app': __dirname,
+    'next/server': path.join(__dirname, 'next-mock.js')
+  });
+}
 
 const envPath = path.join(__dirname, '../.env');
 
