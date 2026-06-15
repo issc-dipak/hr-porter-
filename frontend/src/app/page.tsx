@@ -820,8 +820,8 @@ export default function HRManagementSystem() {
           x: isMobile && !sidebarOpen ? -240 : 0
         }}
         className={cn(
-          "flex h-full min-h-0 flex-col bg-[var(--sidebar-bg)] backdrop-blur-md border border-[var(--sidebar-border)] text-[var(--sidebar-fg)] transition-colors duration-300 z-[150] overflow-visible rounded-3xl shadow-sm",
-          isMobile ? "fixed inset-y-3 left-3 h-[calc(100vh-24px)] shadow-2xl" : ""
+          "flex h-full min-h-0 flex-col bg-[var(--sidebar-bg)] backdrop-blur-md border border-[var(--sidebar-border)] text-[var(--sidebar-fg)] transition-colors duration-300 z-[150] rounded-3xl shadow-sm",
+          isMobile ? "fixed inset-y-3 left-3 h-[calc(100vh-24px)] shadow-2xl overflow-hidden" : "overflow-visible"
         )}
       >
         <div className={cn("p-4 flex items-center shrink-0 relative", sidebarOpen ? "justify-between" : "justify-center")}>
