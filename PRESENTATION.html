@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Core - Premium Enterprise Presentation</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 40%),
+                  radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.12), transparent 45%),
+                  #090d16;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .slide-enter {
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .slide-active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  </style>
+</head>
+<body class="h-screen w-screen text-slate-100 flex flex-col justify-between p-6 sm:p-10 select-none relative">
+
+  <!-- Ambient Glow Effects -->
+  <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- Header -->
+  <header class="flex justify-between items-center z-10 shrink-0">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10" />
+          <polygon points="12 8 8 12 12 16 16 12 12 8" />
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-xs font-black uppercase tracking-widest text-white font-display leading-none">HR Core</h1>
+        <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider leading-none mt-0.5 block">Enterprise Platform</span>
+      </div>
+    </div>
+    <div class="text-[9px] font-black uppercase tracking-widest text-slate-400 bg-slate-900/60 px-3 py-1.5 rounded-full border border-slate-800">
+      Press <span class="text-blue-400">Left / Right Arrows</span> or <span class="text-blue-400">Space</span>
+    </div>
+  </header>
+
+  <!-- Slide Wrapper -->
+  <main class="flex-1 flex items-center justify-center py-6 z-10 relative">
+    
+    <!-- SLIDE 1: Title Slide -->
+    <div id="slide-1" class="glass-card w-full max-w-4xl p-10 sm:p-16 rounded-[2.5rem] slide-enter flex flex-col justify-center h-[480px]">
+      <span class="text-xs font-black uppercase text-blue-500 tracking-[0.2em] mb-4 block font-display">Project Launch Presentation</span>
+      <h2 class="text-4xl sm:text-5xl font-black text-white leading-tight uppercase font-display mb-6 tracking-tight">
+        HR Core Management <br/>
+        <span class="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">System Platform</span>
+      </h2>
+      <p class="text-slate-400 text-sm max-w-xl mb-10 leading-relaxed font-semibold">
+        A premium, real-time enterprise Human Resources hub equipped with smart role-based separation, real-time communication modules, and a high-density layout.
+      </p>
+      <div class="flex items-center gap-4 border-t border-slate-800/80 pt-6">
+        <div class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-xs">DP</div>
+        <div>
+          <span class="text-xs font-bold text-white block uppercase tracking-wide">Dipak Rajendra Patil</span>
+          <span class="text-[9px] text-slate-500 font-semibold uppercase tracking-widest block">System Administrator & Lead Developer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Core Vision & Needs -->
+    <div id="slide-2" class="glass-card w-full max-w-4xl p-10 sm:p-16 rounded-[2.5rem] slide-enter hidden flex-col justify-center h-[480px]">
+      <span class="text-xs font-black uppercase text-blue-500 tracking-[0.2em] mb-3 block font-display">The Challenge & Vision</span>
+      <h2 class="text-3xl font-black text-white uppercase font-display mb-6 tracking-tight">Why HR Core?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-2">
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-blue-400 uppercase tracking-wider">Traditional HR Bottlenecks</h3>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            Most company management dashboards look cluttered, run slow, and fail to provide absolute privacy guidelines between structural roles like general Managers, operational HRs, and employees.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-indigo-400 uppercase tracking-wider">The Modern High-Density Vision</h3>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            A sleek, glassmorphic workspace using a base HTML font-size scale to compact sizing constraints. Designed to optimize workspace layouts and display crucial operational parameters on one screen.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: System Architecture -->
+    <div id="slide-3" class="glass-card w-full max-w-4xl p-10 sm:p-16 rounded-[2.5rem] slide-enter hidden flex-col justify-center h-[480px]">
+      <span class="text-xs font-black uppercase text-blue-500 tracking-[0.2em] mb-3 block font-display">Decoupled Stack</span>
+      <h2 class="text-3xl font-black text-white uppercase font-display mb-6 tracking-tight">Technical Stack & Flow</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-2">
+        <div class="p-5 bg-slate-900/40 border border-slate-800 rounded-2xl">
+          <span class="text-xs font-black text-blue-400 uppercase tracking-widest block mb-2">Frontend</span>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            <strong>Next.js 16</strong> (App Router, TS), TailwindCSS v4, Zustand state management, Framer Motion, TanStack Query for dynamic data cache sync.
+          </p>
+        </div>
+        <div class="p-5 bg-slate-900/40 border border-slate-800 rounded-2xl">
+          <span class="text-xs font-black text-indigo-400 uppercase tracking-widest block mb-2">Backend API</span>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            <strong>Node.js & Express</strong> REST API, Mongoose schemas, real-time WebSocket room broadcasting using Socket.IO server modules.
+          </p>
+        </div>
+        <div class="p-5 bg-slate-900/40 border border-slate-800 rounded-2xl">
+          <span class="text-xs font-black text-emerald-400 uppercase tracking-widest block mb-2">Cloud Services</span>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            <strong>MongoDB Atlas</strong> database storage, Cloudinary file uploads, Razorpay payment integrations, and Gemini API for smart comments.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Role-Based Separation -->
+    <div id="slide-4" class="glass-card w-full max-w-4xl p-10 sm:p-16 rounded-[2.5rem] slide-enter hidden flex-col justify-center h-[480px]">
+      <span class="text-xs font-black uppercase text-blue-500 tracking-[0.2em] mb-3 block font-display">Role Segregation</span>
+      <h2 class="text-3xl font-black text-white uppercase font-display mb-6 tracking-tight">Customized Portals</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-2">
+        <div class="space-y-2">
+          <span class="px-2 py-0.5 bg-blue-600/10 text-blue-500 text-[8px] font-black uppercase tracking-wider rounded border border-blue-500/20">Admin Command</span>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            Governance dashboard tracking total audit logs, active departments, locked accounts, billing plans, and server health.
+          </p>
+        </div>
+        <div class="space-y-2">
+          <span class="px-2 py-0.5 bg-indigo-600/10 text-indigo-500 text-[8px] font-black uppercase tracking-wider rounded border border-indigo-500/20">HR Operations</span>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            Operations control handling onboarding checklist tasks, leave request lists, probation review lists, and recruitment funnel stages.
+          </p>
+        </div>
+        <div class="space-y-2">
+          <span class="px-2 py-0.5 bg-emerald-600/10 text-emerald-500 text-[8px] font-black uppercase tracking-wider rounded border border-emerald-500/20">Employee Workspace</span>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            Personal portal showing leaves setup, Pomodoro sprint timers, workplace chat widgets, and Daily Status Report (DSR) logs.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Real-Time Chat & Workspace -->
+    <div id="slide-5" class="glass-card w-full max-w-4xl p-10 sm:p-16 rounded-[2.5rem] slide-enter hidden flex-col justify-center h-[480px]">
+      <span class="text-xs font-black uppercase text-blue-500 tracking-[0.2em] mb-3 block font-display">Workspace Collaboration</span>
+      <h2 class="text-3xl font-black text-white uppercase font-display mb-6 tracking-tight">Workplace Chat & DSR</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-2">
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-blue-400 uppercase tracking-wider">Socket.IO Messaging Hub</h3>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            Enables instant Direct Messaging (DMs) and public channels. Implements unread message indicators, sounds muting configurations, online/offline indicators, and typing previews.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <h3 class="text-sm font-bold text-indigo-400 uppercase tracking-wider">Daily Status Reports (DSR)</h3>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            A digital record card tracking accomplishments, targeted sprints, and blockers. Connects to reviewers for ratings and automated feedback using backend integrations.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: UI Compilation & Compaction -->
+    <div id="slide-6" class="glass-card w-full max-w-4xl p-10 sm:p-16 rounded-[2.5rem] slide-enter hidden flex-col justify-center h-[480px]">
+      <span class="text-xs font-black uppercase text-blue-500 tracking-[0.2em] mb-3 block font-display">Aesthetic Polish</span>
+      <h2 class="text-3xl font-black text-white uppercase font-display mb-6 tracking-tight">Premium High-Density Layout</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mt-2">
+        <div class="p-4 bg-slate-900/40 border border-slate-800 rounded-2xl">
+          <span class="text-xs font-black text-blue-400 block mb-1">HTML Base Scaling</span>
+          <p class="text-[10.5px] text-slate-300 leading-relaxed">
+            Roots font scale set to `13.5px` to reduce all rem-based sizes, paddings, and borders proportionally.
+          </p>
+        </div>
+        <div class="p-4 bg-slate-900/40 border border-slate-800 rounded-2xl">
+          <span class="text-xs font-black text-indigo-400 block mb-1">Narrower Sidebar</span>
+          <p class="text-[10.5px] text-slate-300 leading-relaxed">
+            Sidebar width compacted to 208px, with font sizes at 11px and icon boundaries set to w-4 h-4.
+          </p>
+        </div>
+        <div class="p-4 bg-slate-900/40 border border-slate-800 rounded-2xl">
+          <span class="text-xs font-black text-emerald-400 block mb-1">Sleeker Controls</span>
+          <p class="text-[10.5px] text-slate-300 leading-relaxed">
+            All button heights set to 36px and forms modified to 10px rounded boundaries for premium finish.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Build & Deployment -->
+    <div id="slide-7" class="glass-card w-full max-w-4xl p-10 sm:p-16 rounded-[2.5rem] slide-enter hidden flex-col justify-center h-[480px]">
+      <span class="text-xs font-black uppercase text-blue-500 tracking-[0.2em] mb-3 block font-display">Ready for Launch</span>
+      <h2 class="text-3xl font-black text-white uppercase font-display mb-6 tracking-tight">Launch & Deployment Strategy</h2>
+      <div class="space-y-4 mt-2">
+        <div class="flex items-start gap-3">
+          <div class="w-5 h-5 bg-blue-600/10 border border-blue-500/25 rounded flex items-center justify-center text-[10px] font-black text-blue-400 shrink-0 mt-0.5">1</div>
+          <div>
+            <h3 class="text-xs font-bold text-white uppercase tracking-wider">Backend API: Render Blueprint</h3>
+            <p class="text-[10.5px] text-slate-400 mt-0.5">Utilizes `render.yaml` configurations to auto-build backend API. Mapped to MongoDB Atlas connection strings.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-5 h-5 bg-indigo-600/10 border border-indigo-500/25 rounded flex items-center justify-center text-[10px] font-black text-indigo-400 shrink-0 mt-0.5">2</div>
+          <div>
+            <h3 class="text-xs font-bold text-white uppercase tracking-wider">Frontend App: Vercel</h3>
+            <p class="text-[10.5px] text-slate-400 mt-0.5">Connects directory `/frontend` to Vercel builds triggering automated static bundles generation and API forwarding.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: Q&A and Thank you -->
+    <div id="slide-8" class="glass-card w-full max-w-4xl p-10 sm:p-16 rounded-[2.5rem] slide-enter hidden flex-col justify-center h-[480px] text-center">
+      <span class="text-xs font-black uppercase text-blue-500 tracking-[0.2em] mb-4 block font-display">Presentation Wrap Up</span>
+      <h2 class="text-4xl font-black text-white uppercase font-display mb-4 tracking-tight">Thank You!</h2>
+      <p class="text-slate-400 text-sm max-w-lg mx-auto mb-10 leading-relaxed font-semibold">
+        The system is fully built, tested, and optimized with a verified TypeScript compilation. Open for questions and feature extensions.
+      </p>
+      <div class="flex justify-center gap-4">
+        <div class="px-5 py-2.5 bg-slate-900/80 rounded-xl border border-slate-800 text-[10px] font-bold text-slate-300 uppercase tracking-widest">
+          Dipak Patil
+        </div>
+        <div class="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-blue-500/20">
+          Lead Developer
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="flex justify-between items-center z-10 shrink-0 border-t border-slate-800/60 pt-4">
+    <div class="text-[10px] font-black uppercase tracking-widest text-slate-500" id="slide-counter">
+      Slide 1 of 8
+    </div>
+    <div class="flex gap-2">
+      <button onclick="prevSlide()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+      </button>
+      <button onclick="nextSlide()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Script for Presentation Logic -->
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 8;
+
+    function showSlide(index) {
+      // Hide all slides
+      for (let i = 1; i <= totalSlides; i++) {
+        const slide = document.getElementById(`slide-${i}`);
+        if (slide) {
+          slide.classList.add('hidden');
+          slide.classList.remove('slide-active');
+        }
+      }
+      // Show selected slide
+      const activeSlide = document.getElementById(`slide-${index}`);
+      if (activeSlide) {
+        activeSlide.classList.remove('hidden');
+        // Trigger reflow to restart animation
+        void activeSlide.offsetWidth;
+        activeSlide.classList.add('slide-active');
+      }
+      
+      // Update slide counter
+      document.getElementById('slide-counter').innerText = `Slide ${index} of ${totalSlides}`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        showSlide(currentSlide);
+      }
+    }
+
+    // Initialize first slide as active
+    document.addEventListener('DOMContentLoaded', () => {
+      showSlide(1);
+    });
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+  </script>
+</body>
+</html>
