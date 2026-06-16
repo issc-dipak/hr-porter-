@@ -11,7 +11,7 @@ interface SendMailOptions {
 
 export async function sendEmail({ to, subject, text, html }: SendMailOptions) {
   const brevoApiKey = process.env.BREVO_API_KEY || 
-    (config.smtpPass?.startsWith('xkeysib-') || config.smtpPass?.startsWith('xsmtpsib-') ? config.smtpPass : '');
+    (config.smtpPass?.startsWith('xkeysib-') ? config.smtpPass : '');
   const fromEmail = config.emailFrom || 'no-reply@yourdomain.com';
 
   // Dynamically inject white-label email branding headers
