@@ -47,5 +47,8 @@ const PayrollSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+PayrollSchema.index({ companyId: 1, month: 1 });
+PayrollSchema.index({ companyId: 1, employee: 1, month: 1 });
+
 delete (mongoose.models as any).Payroll;
 export const Payroll: Model<IPayroll> = mongoose.model<IPayroll>('Payroll', PayrollSchema);

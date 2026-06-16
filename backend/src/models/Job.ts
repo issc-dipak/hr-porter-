@@ -111,4 +111,6 @@ const JobSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+JobSchema.index({ companyId: 1, status: 1 });
+
 export const Job: Model<IJob> = mongoose.models.Job || mongoose.model<IJob>('Job', JobSchema);

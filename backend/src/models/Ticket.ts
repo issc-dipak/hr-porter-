@@ -53,6 +53,9 @@ const TicketSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+TicketSchema.index({ companyId: 1, employeeEmail: 1 });
+TicketSchema.index({ companyId: 1, status: 1 });
+
 if (mongoose.models && mongoose.models.Ticket) {
   delete mongoose.models.Ticket;
 }

@@ -36,27 +36,60 @@ router.get('/admin/dashboard', handleWebRoute(async (req: Request) => {
 
     await connectToDatabase();
 
-    // 1. Core KPIs
-    const allEmployees = await Employee.find({ companyId });
-    const hrUsers = await User.find({ companyId, role: { $in: ['HR', 'Admin', 'Company Admin'] } });
-    
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    const todayStr = new Date().toISOString().split('T')[0];
+    const lastMonth = new Date();
+    lastMonth.setMonth(lastMonth.getMonth() - 1);
+    const isValidId = mongoose.Types.ObjectId.isValid(companyId);
+
+    // 1. Fetch all datasets concurrently using parallel Promise.all, lean, and field projection
+    const [
+      allEmployees,
+      hrUsers,
+      monthlyPayrolls,
+      activeJobs,
+      applications,
+      tickets,
+      todayAttendance,
+      leaves,
+      performances,
+      deletedEmpsCount,
+      auditLogs,
+      allUsers,
+      totalLogsCount,
+      activeCompany,
+      announcements
+    ] = await Promise.all([
+      Employee.find({ companyId }).select('status joinedDate fullName email department salaryStructure').lean(),
+      User.find({ companyId, role: { $in: ['HR', 'Admin', 'Company Admin'] } }).select('status').lean(),
+      Payroll.find({ companyId, month: `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}` }).select('net pf tax').lean(),
+      Job.find({ companyId, status: 'Active' }).select('_id').lean(),
+      Application.find({ companyId }).select('createdAt stage').lean(),
+      Ticket.find({ companyId }).select('status escalated priority employeeName subject').lean(),
+      Attendance.find({ companyId, date: todayStr }).select('status name').lean(),
+      Leave.find({ companyId }).select('status date').lean(),
+      Performance.find({ companyId }).select('rating').lean(),
+      DeletedEmployee.countDocuments({ companyId }),
+      AuditLog.find({ companyId }).sort({ createdAt: -1 }).limit(20).select('performedBy action details createdAt ipAddress').lean(),
+      User.find({ companyId }).select('status role').lean(),
+      AuditLog.countDocuments({ companyId }),
+      Company.findOne(
+        isValidId 
+          ? { $or: [{ _id: companyId }, { slug: companyId }] } 
+          : { slug: companyId }
+      ).select('companyName status').lean(),
+      Announcement.find({ companyId }).sort({ createdAt: -1 }).select('title content category postedBy createdAt').lean()
+    ]);
+
     // Active Departments
     const activeDepartments = [...new Set(allEmployees.map(e => e.department).filter(Boolean))];
 
     // Monthly Payroll Cost
-    const currentMonth = new Date().getMonth();
-    const currentYear = new Date().getFullYear();
-    const monthlyPayrolls = await Payroll.find({ companyId, month: `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}` });
     const totalPayrollAmount = monthlyPayrolls.reduce((sum, p) => sum + (p.net || 0), 0) || allEmployees.reduce((sum, e) => sum + (e.salaryStructure?.net || 0), 0);
     const pfContribution = monthlyPayrolls.reduce((sum, p) => sum + (p.pf || 0), 0) || allEmployees.reduce((sum, e) => sum + (e.salaryStructure?.pf || 0), 0);
     const taxDeductions = monthlyPayrolls.reduce((sum, p) => sum + (p.tax || 0), 0) || allEmployees.reduce((sum, e) => sum + (e.salaryStructure?.tax || 0), 0);
 
-    // Open Jobs and Applications
-    const activeJobs = await Job.find({ companyId, status: 'Active' });
-    const applications = await Application.find({ companyId });
-
-    // Open Helpdesk support tickets
-    const tickets = await Ticket.find({ companyId });
     const openTickets = tickets.filter(t => t.status === 'Open' || t.status === 'Pending');
     const resolvedTickets = tickets.filter(t => t.status === 'Resolved' || t.status === 'Closed');
 
@@ -71,9 +104,7 @@ router.get('/admin/dashboard', handleWebRoute(async (req: Request) => {
       ? Math.round((joinedLast30Days / Math.max(1, allEmployees.length - joinedLast30Days)) * 100)
       : 0;
 
-    // Today's Attendance
-    const todayStr = new Date().toISOString().split('T')[0];
-    const todayAttendance = await Attendance.find({ companyId, date: todayStr });
+    // Today's Attendance Calculations
     const presentToday = new Set(todayAttendance.filter(a => a.status === 'Present' || a.status === 'Late' || a.status === 'On Break').map(a => a.name)).size;
     const activeEmployees = allEmployees.filter(e => e.status === 'Active');
     const attendancePct = activeEmployees.length > 0
@@ -81,21 +112,17 @@ router.get('/admin/dashboard', handleWebRoute(async (req: Request) => {
       : 0;
 
     // Leaves
-    const leaves = await Leave.find({ companyId });
     const leavePct = activeEmployees.length > 0
       ? Math.min(100, Math.round((leaves.filter(l => l.status === 'Approved' && l.date?.includes(todayStr)).length / activeEmployees.length) * 100))
       : 0;
 
     // Performance
-    const performances = await Performance.find({ companyId });
     const avgPerfRating = performances.length > 0
       ? (performances.reduce((sum, p) => sum + (p.rating || 0), 0) / performances.length)
       : 0;
     const performancePct = avgPerfRating > 0 ? Math.round((avgPerfRating / 5) * 100) : 0;
 
     // Hiring Growth MoM
-    const lastMonth = new Date();
-    lastMonth.setMonth(lastMonth.getMonth() - 1);
     const thisMonthApps = applications.filter(a => {
       const d = new Date(a.createdAt);
       return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
@@ -108,9 +135,8 @@ router.get('/admin/dashboard', handleWebRoute(async (req: Request) => {
       ? Math.round(((thisMonthApps - lastMonthApps) / lastMonthApps) * 100) 
       : (thisMonthApps > 0 ? 100 : 0);
 
-    const deletedEmps = await DeletedEmployee.find({ companyId });
     const attritionRate = allEmployees.length > 0
-      ? Math.round((deletedEmps.length / (allEmployees.length + deletedEmps.length)) * 100)
+      ? Math.round((deletedEmpsCount / (allEmployees.length + deletedEmpsCount)) * 100)
       : 0;
     const retentionRate = Math.max(0, 100 - attritionRate);
 
@@ -118,7 +144,6 @@ router.get('/admin/dashboard', handleWebRoute(async (req: Request) => {
     const orgHealthScore = Math.round((attendancePct + performancePct + retentionRate) / 3) || 92;
 
     // 3. Security Metrics & Alert logs
-    const auditLogs = await AuditLog.find({ companyId }).sort({ createdAt: -1 }).limit(20);
     const failedAttemptsCount = auditLogs.filter(log => log.action.toLowerCase().includes('login failed') || log.action.toLowerCase().includes('failed login')).length;
     const passwordResetsCount = auditLogs.filter(log => log.action.toLowerCase().includes('password reset') || log.action.toLowerCase().includes('forgot password')).length;
     const lockedAccountsCount = allEmployees.filter(e => e.status === 'Suspended').length;
@@ -135,7 +160,6 @@ router.get('/admin/dashboard', handleWebRoute(async (req: Request) => {
       }));
 
     // 4. Role & Permissions metrics
-    const allUsers = await User.find({ companyId });
     const activeUsersCount = allUsers.filter(u => u.status === 'Active').length;
     const adminCount = allUsers.filter(u => u.role === 'Admin' || u.role === 'Company Admin').length;
     const hrCount = allUsers.filter(u => u.role === 'HR').length;
@@ -153,18 +177,10 @@ router.get('/admin/dashboard', handleWebRoute(async (req: Request) => {
     const systemHealth = isDbConnected ? 'Operational' : 'Degraded';
 
     // Storage calculation (Dynamic approximation based on database collections)
-    const totalLogsCount = await AuditLog.countDocuments({ companyId });
     const storageInBytes = (allEmployees.length * 2000) + (totalLogsCount * 500) + (applications.length * 1500) + 1200000;
     const storageUsageGB = (storageInBytes / (1024 * 1024 * 1024)).toFixed(4);
 
     // Subscription Billing details
-    const isValidId = mongoose.Types.ObjectId.isValid(companyId);
-    const activeCompany = await Company.findOne(
-      isValidId 
-        ? { $or: [{ _id: companyId }, { slug: companyId }] } 
-        : { slug: companyId }
-    );
-
     const subscription = {
       companyName: activeCompany?.companyName || decoded.companyName || 'HCP Index Labs',
       plan: 'Enterprise Premium SaaS',
@@ -182,9 +198,6 @@ router.get('/admin/dashboard', handleWebRoute(async (req: Request) => {
       details: log.details,
       timestamp: log.createdAt
     }));
-
-    // 7. Announcements
-    const announcements = await Announcement.find({ companyId }).sort({ createdAt: -1 });
 
     return NextResponse.json({
       kpis: {

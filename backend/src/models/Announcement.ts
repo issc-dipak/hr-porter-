@@ -23,5 +23,7 @@ const AnnouncementSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+AnnouncementSchema.index({ companyId: 1, createdAt: -1 });
+
 delete (mongoose.models as any).Announcement;
 export const Announcement: Model<IAnnouncement> = mongoose.model<IAnnouncement>('Announcement', AnnouncementSchema);

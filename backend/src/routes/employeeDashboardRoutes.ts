@@ -24,43 +24,41 @@ router.get('/employee/dashboard', handleWebRoute(async (req: Request) => {
 
     await connectToDatabase();
 
-    // 1. Fetch Employee Profile
-    const employee = await Employee.findOne({ companyId, email });
+    // 1. Fetch Employee Profile with projection
+    const employee = await Employee.findOne({ companyId, email }).select('fullName maxLeaves department salaryStructure profilePicture joinedDate phone location documents').lean();
     if (!employee) {
       return NextResponse.json({ error: 'Employee not found' }, { status: 404 });
     }
 
     const todayStr = new Date().toISOString().split('T')[0];
 
-    // 2. Fetch Today's Attendance
-    const todayAttendance = await Attendance.findOne({
-      companyId,
-      name: employee.fullName,
-      date: todayStr
-    });
+    // 2. Fetch remaining datasets concurrently using parallel Promise.all, lean, and field projection
+    const [
+      todayAttendance,
+      leaves,
+      payroll,
+      announcements,
+      tickets,
+      workUpdates,
+      allEmployees
+    ] = await Promise.all([
+      Attendance.findOne({ companyId, name: employee.fullName, date: todayStr }).select('status name remarks timeIn timeOut date').lean(),
+      Leave.find({ companyId, name: employee.fullName }).select('status type date reason dept').lean(),
+      Payroll.findOne({ companyId, employee: email }).sort({ createdAt: -1 }).lean(),
+      Announcement.find({ companyId }).sort({ createdAt: -1 }).limit(5).select('title content category postedBy createdAt').lean(),
+      Ticket.find({ companyId, employeeEmail: email }).sort({ createdAt: -1 }).select('status escalated priority employeeName subject').lean(),
+      DailyWorkUpdate.find({ companyId, employeeEmail: email }).sort({ date: -1 }).limit(5).select('yesterdaysWork todaysPlan blockers status date').lean(),
+      Employee.find({ companyId, status: 'Active' }).select('fullName dateOfBirth profilePicture joinedDate').lean()
+    ]);
 
-    // 3. Fetch Leaves info
-    const leaves = await Leave.find({ companyId, name: employee.fullName });
     const pendingLeaves = leaves.filter(l => l.status === 'Pending');
     const approvedLeavesCount = leaves.filter(l => l.status === 'Approved').length;
     const maxLeaves = employee.maxLeaves || 24;
     const remainingLeaves = Math.max(0, maxLeaves - approvedLeavesCount);
 
-    // 4. Fetch Payroll snapshot
-    const payroll = await Payroll.findOne({ companyId, employee: email }).sort({ createdAt: -1 });
-
-    // 5. Fetch Announcements
-    const announcements = await Announcement.find({ companyId }).sort({ createdAt: -1 }).limit(5);
-
-    // 6. Fetch Helpdesk Tickets
-    const tickets = await Ticket.find({ companyId, employeeEmail: email }).sort({ createdAt: -1 });
     const openTicketsCount = tickets.filter(t => t.status === 'Open' || t.status === 'Pending').length;
 
-    // 7. Work Updates
-    const workUpdates = await DailyWorkUpdate.find({ companyId, employeeEmail: email }).sort({ date: -1 }).limit(5);
-
-    // 8. Upcoming events (mock or real dates from employees)
-    const allEmployees = await Employee.find({ companyId, status: 'Active' });
+    // 3. Upcoming events (mock or real dates from employees)
     const events = allEmployees.map(emp => {
       if (emp.dateOfBirth) {
         return {

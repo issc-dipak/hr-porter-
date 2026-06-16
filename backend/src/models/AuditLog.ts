@@ -21,5 +21,7 @@ const AuditLogSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+AuditLogSchema.index({ companyId: 1, createdAt: -1 });
+
 delete (mongoose.models as any).AuditLog;
 export const AuditLog: Model<IAuditLog> = mongoose.model<IAuditLog>('AuditLog', AuditLogSchema);

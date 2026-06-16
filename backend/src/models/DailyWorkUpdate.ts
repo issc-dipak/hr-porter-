@@ -58,6 +58,9 @@ const DailyWorkUpdateSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+DailyWorkUpdateSchema.index({ companyId: 1, date: -1 });
+DailyWorkUpdateSchema.index({ companyId: 1, employeeEmail: 1, date: -1 });
+
 // Prevent mongoose from using cached models across hot-reloads
 delete (mongoose.models as any).DailyWorkUpdate;
 export const DailyWorkUpdate: Model<IDailyWorkUpdate> = mongoose.model<IDailyWorkUpdate>('DailyWorkUpdate', DailyWorkUpdateSchema);

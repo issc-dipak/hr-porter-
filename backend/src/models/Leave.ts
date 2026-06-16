@@ -31,6 +31,9 @@ const LeaveSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+LeaveSchema.index({ companyId: 1, name: 1 });
+LeaveSchema.index({ companyId: 1, status: 1 });
+
 // Prevent mongoose from using stale cached models during hot reloads
 if (mongoose.models && mongoose.models.Leave) {
   delete mongoose.models.Leave;

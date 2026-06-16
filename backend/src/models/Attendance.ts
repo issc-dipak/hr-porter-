@@ -41,6 +41,9 @@ const AttendanceSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+AttendanceSchema.index({ companyId: 1, date: 1 });
+AttendanceSchema.index({ companyId: 1, name: 1, date: 1 });
+
 // Prevent mongoose from using stale cached models during hot reloads
 if (mongoose.models && mongoose.models.Attendance) {
   delete mongoose.models.Attendance;

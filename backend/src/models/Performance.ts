@@ -25,4 +25,6 @@ const PerformanceSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+PerformanceSchema.index({ companyId: 1, rating: -1 });
+
 export const Performance: Model<IPerformance> = mongoose.models.Performance || mongoose.model<IPerformance>('Performance', PerformanceSchema);
